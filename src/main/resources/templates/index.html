@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>📚 Book Library</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">📚 Book Library</div>
+  <a th:href="@{/books/new}" class="btn btn-primary">+ Add Book</a>
+</nav>
+
+<div class="container">
+
+  <!-- Flash message -->
+  <div th:if="${successMsg}" class="alert alert-success" th:text="${successMsg}"></div>
+
+  <!-- Stats bar -->
+  <div class="stats-bar">
+    <div class="stat-card">
+      <span class="stat-num" th:text="${totalBooks}">0</span>
+      <span class="stat-label">Total Books</span>
+    </div>
+    <div class="stat-card">
+      <span class="stat-num" th:text="${availableCount}">0</span>
+      <span class="stat-label">Available</span>
+    </div>
+  </div>
+
+  <!-- Search & Filter -->
+  <form th:action="@{/}" method="get" class="search-bar">
+    <input type="text" name="search" placeholder="Search by title, author or genre…"
+           th:value="${search}" class="search-input"/>
+    <label class="checkbox-label">
+      <input type="checkbox" name="availableOnly" value="true"
+             th:checked="${availableOnly}"/> Available only
+    </label>
+    <button type="submit" class="btn btn-secondary">Search</button>
+    <a th:href="@{/}" class="btn btn-ghost">Clear</a>
+  </form>
+
+  <!-- Book grid -->
+  <div th:if="${books.isEmpty()}" class="empty-state">
+    <p>No books found. <a th:href="@{/books/new}">Add the first one!</a></p>
+  </div>
+
+  <div class="book-grid" th:unless="${books.isEmpty()}">
+    <div class="book-card" th:each="book : ${books}">
+      <div class="book-header">
+        <span class="genre-badge" th:text="${book.genre ?: 'General'}">Fiction</span>
+        <span class="avail-badge"
+              th:classappend="${book.available} ? 'available' : 'unavailable'"
+              th:text="${book.available} ? 'Available' : 'Checked Out'">Available</span>
+      </div>
+      <h3 class="book-title" th:text="${book.title}">Title</h3>
+      <p class="book-author" th:text="'by ' + ${book.author}">Author</p>
+      <div class="book-meta">
+        <span th:if="${book.publishedYear}" th:text="${book.publishedYear}">2023</span>
+        <span th:if="${book.rating}" class="rating">
+          ⭐ <span th:text="${#numbers.formatDecimal(book.rating,1,1)}">4.5</span>
+        </span>
+      </div>
+      <p class="book-desc" th:if="${book.description}"
+         th:text="${#strings.abbreviate(book.description, 100)}">Desc</p>
+      <div class="book-actions">
+        <a th:href="@{/books/{id}(id=${book.id})}" class="btn btn-sm btn-ghost">View</a>
+        <a th:href="@{/books/{id}/edit(id=${book.id})}" class="btn btn-sm btn-secondary">Edit</a>
+        <form th:action="@{/books/{id}/toggle(id=${book.id})}" method="post" style="display:inline">
+          <button type="submit" class="btn btn-sm btn-toggle"
+                  th:text="${book.available} ? 'Check Out' : 'Return'">Toggle</button>
+        </form>
+        <form th:action="@{/books/{id}/delete(id=${book.id})}" method="post" style="display:inline"
+              onsubmit="return confirm('Delete this book?')">
+          <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+        </form>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer class="footer">
+  <p>Book Library App &mdash; Built with Spring Boot &amp; Thymeleaf</p>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title th:text="${book.title} + ' | Book Library'">Book Detail</title>
+  <link rel="stylesheet" th:href="@{/css/style.css}"/>
+</head>
+<body>
+
+<nav class="navbar">
+  <a th:href="@{/}" class="nav-brand">📚 Book Library</a>
+  <a th:href="@{/books/new}" class="btn btn-primary">+ Add Book</a>
+</nav>
+
+<div class="container">
+  <a th:href="@{/}" class="back-link">← Back to Library</a>
+
+  <div class="detail-card">
+    <div class="detail-header">
+      <div>
+        <span class="genre-badge lg" th:text="${book.genre ?: 'General'}">Fiction</span>
+        <span class="avail-badge lg"
+              th:classappend="${book.available} ? 'available' : 'unavailable'"
+              th:text="${book.available} ? 'Available' : 'Checked Out'">Available</span>
+      </div>
+      <h1 th:text="${book.title}">Book Title</h1>
+      <p class="detail-author" th:text="'by ' + ${book.author}">Author Name</p>
+    </div>
+
+    <div class="detail-body">
+      <div class="detail-grid">
+        <div class="detail-item">
+          <span class="detail-label">ISBN</span>
+          <span class="detail-value" th:text="${book.isbn}">—</span>
+        </div>
+        <div class="detail-item" th:if="${book.publishedYear}">
+          <span class="detail-label">Published</span>
+          <span class="detail-value" th:text="${book.publishedYear}">—</span>
+        </div>
+        <div class="detail-item" th:if="${book.rating}">
+          <span class="detail-label">Rating</span>
+          <span class="detail-value">⭐ <span th:text="${#numbers.formatDecimal(book.rating,1,1)}">—</span> / 5.0</span>
+        </div>
+        <div class="detail-item" th:if="${book.createdAt}">
+          <span class="detail-label">Added</span>
+          <span class="detail-value" th:text="${#temporals.format(book.createdAt,'dd MMM yyyy')}">—</span>
+        </div>
+      </div>
+
+      <div class="detail-description" th:if="${book.description}">
+        <h3>Description</h3>
+        <p th:text="${book.description}">No description.</p>
+      </div>
+    </div>
+
+    <div class="detail-actions">
+      <a th:href="@{/books/{id}/edit(id=${book.id})}" class="btn btn-secondary">✏️ Edit</a>
+      <form th:action="@{/books/{id}/toggle(id=${book.id})}" method="post" style="display:inline">
+        <button type="submit" class="btn btn-toggle"
+                th:text="${book.available} ? '📤 Check Out' : '📥 Return'">Toggle</button>
+      </form>
+      <form th:action="@{/books/{id}/delete(id=${book.id})}" method="post" style="display:inline"
+            onsubmit="return confirm('Delete this book permanently?')">
+        <button type="submit" class="btn btn-danger">🗑️ Delete</button>
+      </form>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">
+  <p>Book Library App &mdash; Built with Spring Boot &amp; Thymeleaf</p>
+</footer>
+</body>
+</html>
