@@ -56,3 +56,4 @@ mvn test
 Available at **http://localhost:8081/h2-console**
 - JDBC URL: `jdbc:h2:mem:bookappdb`
 - Username: `sa` | Password: *(empty)*
+  
