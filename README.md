@@ -73,6 +73,20 @@ After starting the application, verify the main user flow:
 - [ ] Availability can be toggled
 - [ ] Book statistics update after changes
 
+## 🔍 Release Verification Checklist
+
+Before considering a release ready, verify:
+
+- [ ] `mvn test` completes successfully
+- [ ] Application starts without configuration errors
+- [ ] Home, detail, create and edit pages load correctly
+- [ ] Search and availability filtering return expected results
+- [ ] Invalid form submissions show validation feedback
+- [ ] Create, edit, delete and toggle operations persist correctly
+- [ ] Statistics reflect the current book collection
+- [ ] H2 console is available only when intended for development
+- [ ] README versions and runtime port match the application configuration
+
 ## 📌 Development Notes
 
-Keep the README and application configuration aligned when changing the Java version, Spring Boot version, or server port. Documentation was refreshed on **September 1, 2026** with a manual verification checklist for the core UI workflow.
+Keep the README and application configuration aligned when changing the Java version, Spring Boot version, or server port. Documentation was refreshed on **September 2, 2026** with a release verification checklist for the core UI workflow.
