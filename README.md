@@ -1,6 +1,6 @@
 # 📚 Book Library App
 
-A full-stack Book Library web application built with **Spring Boot 3**, **Thymeleaf**, and **H2** database. Provides a clean, responsive UI to browse, search, add, edit, and manage books.
+A full-stack Book Library web application built with **Spring Boot 3.1.11**, **Java 17**, **Thymeleaf**, and **H2** database. Provides a clean, responsive UI to browse, search, add, edit, and manage books.
 
 ## 🚀 Features
 
@@ -18,8 +18,8 @@ A full-stack Book Library web application built with **Spring Boot 3**, **Thymel
 
 | Layer | Technology |
 |---|---|
-| Framework | Spring Boot 3.2 |
-| Language | Java 21 |
+| Framework | Spring Boot 3.1.11 |
+| Language | Java 17 |
 | UI | Thymeleaf + custom CSS |
 | Persistence | Spring Data JPA + Hibernate |
 | Database | H2 (in-memory) |
@@ -28,9 +28,7 @@ A full-stack Book Library web application built with **Spring Boot 3**, **Thymel
 
 ## ▶️ Running the App
 
-```bash
-mvn spring-boot:run
-```
+Run with Maven using: mvn spring-boot:run
 
 Open your browser at **http://localhost:8081**.
 
@@ -38,33 +36,31 @@ Open your browser at **http://localhost:8081**.
 
 | Route | Description |
 |---|---|
-| `/` | Home — book grid, search, filter |
-| `/books/new` | Add a new book |
-| `/books/{id}` | Book detail view |
-| `/books/{id}/edit` | Edit a book |
-| `/books/{id}/delete` | Delete (POST) |
-| `/books/{id}/toggle` | Toggle availability (POST) |
+| / | Home — book grid, search, filter |
+| /books/new | Add a new book |
+| /books/{id} | Book detail view |
+| /books/{id}/edit | Edit an existing book |
+| /books/{id}/delete | Delete (POST) |
+| /books/{id}/toggle | Toggle availability (POST) |
 
 ## 🧪 Running Tests
 
-```bash
-mvn test
-```
+Run the automated test suite with: mvn test
 
 ## 🔍 H2 Console
 
 Available at **http://localhost:8081/h2-console**
 
-- JDBC URL: `jdbc:h2:mem:bookappdb`
-- Username: `sa`
-- Password: *(empty)*
+- JDBC URL: jdbc:h2:mem:bookappdb
+- Username: sa
+- Password: empty
 
 ## 🧭 Manual Verification Checklist
 
 After starting the application, verify the main user flow:
 
 - [ ] Home page loads and displays seeded books
-- [ ] Search returns matching books
+- [ ] Search returns matching results
 - [ ] Availability filter changes the displayed results
 - [ ] New-book validation rejects invalid input
 - [ ] A valid book can be created
@@ -77,7 +73,7 @@ After starting the application, verify the main user flow:
 
 Before considering a release ready, verify:
 
-- [ ] `mvn test` completes successfully
+- [ ] mvn test completes successfully
 - [ ] Application starts without configuration errors
 - [ ] Home, detail, create and edit pages load correctly
 - [ ] Search and availability filtering return expected results
@@ -89,4 +85,4 @@ Before considering a release ready, verify:
 
 ## 📌 Development Notes
 
-Keep the README and application configuration aligned when changing the Java version, Spring Boot version, or server port. Documentation was refreshed on **September 2, 2026** with a release verification checklist for the core UI workflow.
+Keep the README and application configuration aligned when changing the Java version, Spring Boot version, or server port. The documented Java and Spring Boot versions match the current Maven configuration.
