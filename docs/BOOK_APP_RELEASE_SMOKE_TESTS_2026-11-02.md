@@ -1,0 +1,1 @@
+Book App: release smoke tests
